@@ -1,11 +1,55 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { actions } from 'astro:actions';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const result = Astro.getActionResult(actions.getGreeting);
+if (result && !result.error) {
+  console.log(result);
+}
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+{result?.error && <p>Unable to get response from Gemini.</p>}
+
+<form id="prompt-form" method="POST" action={actions.getGreeting}>
+  <input transition:persist type="text" name="prompt" id="prompt" />
+  <input type="submit" value="Get Response" />
+	<div id="loader">Loading...</span>
+
+  <script>
+    import { actions } from 'astro:actions';
+    const promptForm = document.getElementById('prompt-form');
+		const loader = document.getElementById('loader');
+    if (loader) {
+      loader.style.display = 'none';
+
+			promptForm?.addEventListener('submit', async (event) => {
+				event.preventDefault();
+				loader.style.display = 'block';
+	
+				let form;
+	
+				if (promptForm instanceof HTMLFormElement) {
+					form = new FormData(promptForm);
+				} else {
+					throw new Error('Form element not found');
+				}
+				
+				try {
+					const { data, error } = await actions.gemini.getResponse(form);
+		
+					if (data) {
+						console.log(data);
+						
+					}
+					if (error) {
+						throw new Error(error.message || error.toString());
+					}
+					loader.style.display = 'none';
+				} catch (error) {
+					console.error(error);
+				}
+			});
+    }
+
+
+  </script>
+</form>
