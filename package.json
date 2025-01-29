@@ -3,14 +3,22 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --host",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/netlify": "^6.1.0",
+    "@astrojs/vue": "^5.0.6",
+    "@formkit/vue": "^1.6.9",
     "@google/generative-ai": "^0.21.0",
-    "astro": "^5.1.10"
+    "astro": "^5.1.10",
+    "buffer": "^6.0.3",
+    "marked": "^15.0.6",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-basic-ssl": "^1.2.0"
   }
 }
