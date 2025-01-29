@@ -4,7 +4,7 @@ import { GoogleGenerativeAI } from '@google/generative-ai';
 
 const key = import.meta.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(key);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+const model = genAI.getGenerativeModel({ model: 'gemini-exp-1114' });
 
 export const gemini = {
   getResponse: defineAction({
@@ -19,8 +19,6 @@ export const gemini = {
 
       if (response) {
         const responseText = response.text();
-
-        console.log(responseText);
 
         return responseText;
       } else {
