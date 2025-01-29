@@ -1,4 +1,3 @@
-// src/pages/_app.ts
 import type { App } from 'vue';
 import { plugin, defaultConfig } from '@formkit/vue';
 

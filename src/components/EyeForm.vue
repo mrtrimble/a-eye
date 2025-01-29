@@ -6,19 +6,6 @@
   <canvas ref="canvasRef"
           style="display: none"></canvas>
 
-  <!-- <div v-if="devices.length">
-    <select name=""
-            id=""
-            ref="cameraOptionRefs"
-            v-model="selectedCamera">
-      <option v-for="device in devices"
-              :key="device.deviceId"
-              :value="device.deviceId">
-        Select camera
-      </option>
-    </select>
-  </div> -->
-
   <img alt=""
        ref="imageRef">
 
@@ -47,7 +34,6 @@ import { fileToGenerativePart } from '../utilities/fileToGenerativePart';
 const playButtonRef = ref<HTMLButtonElement>();
 const pauseButtonRef = ref<HTMLButtonElement>();
 const screenshotButtonRef = ref<HTMLButtonElement>();
-// const cameraOptionRefs = ref(null);
 const canvasRef = ref<HTMLCanvasElement>();
 const imageRef = ref<HTMLImageElement>();
 const videoRef = ref<HTMLVideoElement>();
@@ -142,10 +128,8 @@ const submitImage = async () => {
     const imageFile = new File([dataToBlob(photo)], "image.webp", {
       type: "image/webp"
     });
-    const image = await fileToGenerativePart(imageFile);
 
-    console.log({ image });
-    console.log(typeof image);
+    const image = await fileToGenerativePart(imageFile);
 
     try {
       const { data, error } = await actions.gemini.getResponse(image)
@@ -163,37 +147,4 @@ const submitImage = async () => {
     }
   }
 }
-
-
-// import { ref } from 'vue';
-// import { marked } from 'marked';
-
-// interface FormFields {
-//   photo: File;
-// }
-
-// const response = ref('');
-
-// const submitHandler = async (fields: FormFields) => {
-//   // Let's pretend this is an ajax request:
-
-//   const { photo } = fields;
-
-//   console.log(typeof photo);
-
-//   debugger;
-
-//   try {
-//     const { data, error } = await actions.gemini.getResponse(photo)
-//     if (data) {
-//       response.value = await marked.parse(data);
-//     }
-
-//     if (error) {
-//       throw new Error(error.message || error.toString());
-//     }
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
 </script>

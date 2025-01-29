@@ -6,7 +6,6 @@ import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 
 const key = import.meta.env.GEMINI_API_KEY;
 const genAI = new GoogleGenerativeAI(key);
-const fileSizeLimit = 5 * 1024 * 1024; // 5MB
 
 const schema = {
   description: 'Part details',
