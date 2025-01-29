@@ -18,7 +18,7 @@ const schema = {
     },
     description: {
       type: SchemaType.STRING,
-      description: 'Describe the part',
+      description: 'Describe the part, do not mention any people in the photo',
       nullable: false
     },
     dimensions: {
@@ -26,17 +26,17 @@ const schema = {
       properties: {
         height: {
           type: SchemaType.STRING,
-          description: "The part's height",
+          description: "The part's height in inches",
           nullable: false
         },
         width: {
           type: SchemaType.STRING,
-          description: "The part's width",
+          description: "The part's width in inches",
           nullable: false
         },
         depth: {
           type: SchemaType.STRING,
-          description: "The part's depth"
+          description: "The part's depth in inches"
         }
       }
     }
@@ -56,19 +56,7 @@ export const gemini = {
   getResponse: defineAction({
     handler: async (image) => {
       const promptInstructions = `
-        Describe metal part, estimate dimensions, and provide name, follow JSON schema here:
-
-        part = {
-          name: string,
-          description: string,
-          dimensions: {
-            height: string,
-            width: string,
-            depth: string 
-          }
-        }
-      
-        Return: part
+        Describe metal part, estimate dimensions, and provide name, follow JSON schema:
       `;
 
       const { response } = await model.generateContent([promptInstructions, image]);

@@ -1,3 +1,5 @@
+// credit: https://github.com/charliegerard/webdev-challenge
+
 export async function fileToGenerativePart(file) {
   const base64EncodedDataPromise = new Promise((resolve) => {
     const reader = new FileReader();

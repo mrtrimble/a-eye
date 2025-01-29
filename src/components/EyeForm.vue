@@ -1,13 +1,15 @@
 <template>
 
-  <video autoplay
-         ref="videoRef"></video>
+  <div class="stack">
+    <video autoplay
+           ref="videoRef"></video>
 
-  <canvas ref="canvasRef"
-          style="display: none"></canvas>
+    <canvas ref="canvasRef"
+            style="display: none"></canvas>
 
-  <img alt=""
-       ref="imageRef">
+    <img alt=""
+         ref="imageRef">
+  </div>
 
   <div class="controls">
     <button ref="playButtonRef"
@@ -21,8 +23,16 @@
             @click="handleImageCapture">Take Photo</button>
   </div>
 
-  <div v-html="response"
-       v-if="response"></div>
+  <dl v-if="response">
+    <dt>Name:</dt>
+    <dd v-text="response.name"></dd>
+    <dt>Description:</dt>
+    <dd v-text="response.description"></dd>
+    <dt>Dimensions</dt>
+    <dd>Height: {{ response.dimensions.height }}</dd>
+    <dd>Width: {{ response.dimensions.width }}</dd>
+    <dd>Depth: {{ response.dimensions.depth }}</dd>
+  </dl>
 </template>
 
 <script setup lang="ts">
@@ -40,7 +50,13 @@ const videoRef = ref<HTMLVideoElement>();
 const devices = ref<MediaDeviceInfo[]>([]);
 const streamStarted = ref(false);
 const selectedCamera = ref(null);
-const response = ref('');
+interface Response {
+  description?: string;
+  name?: string;
+  [key: string]: any;
+}
+
+const response = ref<Response | null>(null);
 
 const constraints = ref({
   video: {
@@ -134,9 +150,12 @@ const submitImage = async () => {
     try {
       const { data, error } = await actions.gemini.getResponse(image)
       if (data) {
-        response.value = data;
+        const parsedData = JSON.parse(data);
+        response.value = parsedData;
 
-        console.log(response.value)
+        if (parsedData?.description) {
+          imageRef.value.alt = parsedData.description;
+        }
       }
 
       if (error) {
@@ -148,3 +167,16 @@ const submitImage = async () => {
   }
 }
 </script>
+
+<style>
+.stack {
+  display: grid;
+  grid-template-areas: 'stack';
+
+  >* {
+    grid-area: stack;
+    display: block;
+    width: 100%;
+  }
+}
+</style>

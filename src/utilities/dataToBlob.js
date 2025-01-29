@@ -1,3 +1,5 @@
+// credit: https://github.com/charliegerard/webdev-challenge
+
 export const dataToBlob = (dataURI) => {
   const byteString = atob(dataURI.split(",")[1]);
   const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
