@@ -1,7 +1,4 @@
 import { defineAction, ActionError } from 'astro:actions';
-import { Buffer } from 'buffer';
-
-import { z } from 'astro:schema';
 import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 
 const key = import.meta.env.GEMINI_API_KEY;

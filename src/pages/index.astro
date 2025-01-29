@@ -7,7 +7,7 @@ import EyeForm from '../components/EyeForm.vue';
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Stratus A-EYE</title>
   </head>
   <body>
     <header>
@@ -23,11 +23,20 @@ import EyeForm from '../components/EyeForm.vue';
 </html>
 
 <style>
+  @import '@acab/reset.css' layer(reset);
+	body {
+		padding-block: 1.5rem;
+	}
   main,
   header {
     width: min(100% - 3rem, var(--container-max, 60ch));
     margin-inline: auto;
+
+    hgroup {
+      > * {
+        margin: 0;
+        paddign: 0;
+      }
+    }
   }
-
-
 </style>

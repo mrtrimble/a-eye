@@ -1,38 +1,50 @@
 <template>
+  <section id="camera-section"
+           aria-label="Camera Section">
+    <div class="stack">
+      <video autoplay
+             ref="videoRef"
+             muted="true"></video>
 
-  <div class="stack">
-    <video autoplay
-           ref="videoRef"></video>
+      <svg xmlns="http://www.w3.org/2000/svg"
+           viewBox="0 0 576 512"
+           class="icon">
+        <path fill="currentColor"
+              d="M0 128C0 92.7 28.7 64 64 64l256 0c35.3 0 64 28.7 64 64l0 256c0 35.3-28.7 64-64 64L64 448c-35.3 0-64-28.7-64-64L0 128zM559.1 99.8c10.4 5.6 16.9 16.4 16.9 28.2l0 256c0 11.8-6.5 22.6-16.9 28.2s-23 5-32.9-1.6l-96-64L416 337.1l0-17.1 0-128 0-17.1 14.2-9.5 96-64c9.8-6.5 22.4-7.2 32.9-1.6z" />
+      </svg>
 
-    <canvas ref="canvasRef"
-            style="display: none"></canvas>
+      <canvas ref="canvasRef"
+              style="display: none"></canvas>
 
-    <img alt=""
-         ref="imageRef">
-  </div>
+      <img alt=""
+           ref="imageRef">
+    </div>
 
-  <div class="controls">
-    <button ref="playButtonRef"
-            title="Play"
-            @click="handlePlay">Play</button>
-    <button ref="pauseButtonRef"
-            title="Pause"
-            @click="handlePause">Pause</button>
-    <button ref="screenshotButtonRef"
-            title="ScreenShot"
-            @click="handleImageCapture">Take Photo</button>
-  </div>
+    <div class="controls">
+      <button ref="playButtonRef"
+              title="Play"
+              @click="handlePlay">
+        Open Camera
+      </button>
+      <button ref="pauseButtonRef"
+              title="Pause"
+              @click="handlePause">Pause</button>
+      <button ref="screenshotButtonRef"
+              title="ScreenShot"
+              @click="handleImageCapture">Take Photo</button>
+    </div>
 
-  <dl v-if="response">
-    <dt>Name:</dt>
-    <dd v-text="response.name"></dd>
-    <dt>Description:</dt>
-    <dd v-text="response.description"></dd>
-    <dt>Dimensions</dt>
-    <dd>Height: {{ response.dimensions.height }}</dd>
-    <dd>Width: {{ response.dimensions.width }}</dd>
-    <dd>Depth: {{ response.dimensions.depth }}</dd>
-  </dl>
+    <dl v-if="response">
+      <dt>Name:</dt>
+      <dd v-text="response.name"></dd>
+      <dt>Description:</dt>
+      <dd v-text="response.description"></dd>
+      <dt>Dimensions</dt>
+      <dd>Height: {{ response.dimensions.height }}</dd>
+      <dd>Width: {{ response.dimensions.width }}</dd>
+      <dd>Depth: {{ response.dimensions.depth }}</dd>
+    </dl>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -50,6 +62,7 @@ const videoRef = ref<HTMLVideoElement>();
 const devices = ref<MediaDeviceInfo[]>([]);
 const streamStarted = ref(false);
 const selectedCamera = ref(null);
+
 interface Response {
   description?: string;
   name?: string;
@@ -171,6 +184,15 @@ const submitImage = async () => {
 </script>
 
 <style>
+#camera-section {
+  margin-block-start: 1.5rem;
+
+  >*+* {
+    margin: 0;
+    margin-block-start: 1.5rem;
+  }
+}
+
 .stack {
   display: grid;
   grid-template-areas: 'stack';
@@ -187,6 +209,25 @@ const submitImage = async () => {
     object-fit: cover;
     object-position: center;
     z-index: 1;
+  }
+
+  .icon {
+    height: 4rem;
+    place-self: center;
+  }
+
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+
+
+  button {
+    flex: 1;
+    font-size: 1.2rem;
+    padding: 0.65rem;
   }
 }
 </style>
