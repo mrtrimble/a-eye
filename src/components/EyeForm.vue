@@ -118,6 +118,8 @@ const handlePause = () => {
 }
 
 const handleImageCapture = () => {
+  handlePause();
+
   if (canvasRef.value) {
     if (videoRef.value) {
       canvasRef.value.height = videoRef.value.videoHeight ?? 0;
@@ -174,9 +176,17 @@ const submitImage = async () => {
   grid-template-areas: 'stack';
 
   >* {
+    aspect-ratio: 16/9;
     grid-area: stack;
     display: block;
     width: 100%;
+    height: auto;
+  }
+
+  video {
+    object-fit: cover;
+    object-position: center;
+    z-index: 1;
   }
 }
 </style>
