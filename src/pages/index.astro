@@ -4,11 +4,134 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout>
-  <h2>Features</h2>
-  <ul>
-    <li>Part Identification - Find out what that thing is, AI might know!</li>
-    <li>Document Scanner - Grab some text from the physical world, copy and paste as needed!</li>
-    <li>Diagram Generation - Doesn't do what you might expect!</li>
-  </ul>
+  <section id="features-section" aria-labelledby="features-heading">
+    <hgroup id="features-heading">
+      <h2>Features</h2>
+    </hgroup>
+    <ul class="card-list">
+      <li>
+        <article class="card">
+          <hgroup>
+            <h3><a href="/identify-part">Part Identification</a></h3>
+            <p>Find out what that thing is!</p>
+          </hgroup>
+
+          <dl>
+            <dt>Findings:</dt>
+            <dd>Able to identify wide variety of objects without any additional training.</dd>
+            <dd>Training on real world data may improve results further.</dd>
+            <dd>Able to look up dimensions on known objects, but provides estimations for unknown objects.</dd>
+          </dl>
+        </article>
+      </li>
+      <li>
+        <article class="card">
+          <hgroup>
+            <h3><a href="/document-scanner">Document Scanning</a></h3>
+            <p>Grab text from the physical world, copy and paste as needed!</p>
+          </hgroup>
+
+          <dl>
+            <dt>Findings:</dt>
+            <dd>Able to transcribe text from physical objects without any extra libraries for OCR.</dd>
+            <dd>Response can be returned in markdown, to give more formatting to scanned documents.</dd>
+          </dl>
+        </article>
+      </li>
+
+      <li>
+        <article class="card">
+          <hgroup>
+            <h3><a href="/generate-diagram">Generate Diagram</a></h3>
+            <p>Doesn't quite do what you might expect!</p>
+          </hgroup>
+
+          <dl>
+            <dt>Findings:</dt>
+            <dd>Able to generate response based on the content of a photo.</dd>
+            <dd>Gemini JavaScript API does not handle image generation, yet.</dd>
+            <dd>Hilarious results.</dd>
+          </dl>
+        </article>
+      </li>
+    </ul>
+  </section>
+  <section aria-labelledby="project-info-section">
+    <hgroup>
+      <h2 id="project-info-section">Project Information</h2>
+    </hgroup>
+
+    <dl class="card-grid">
+      <div class="card">
+        <dt>Goal:</dt>
+        <dd>Experiment utilizing AI to extract and analyze information from images.</dd>
+      </div>
+      <div class="card">
+        <dt>AI Model</dt>
+        <dd><a href="https://aistudio.google.com/">Google Gemini</a></dd>
+      </div>
+      <div class="card">
+        <dt>Total Cost:</dt>
+        <dd>Google Gemini - Free Tier: $0.00</dd>
+      </div>
+      <div class="card">
+        <dt>Frameworks</dt>
+        <dd><a href="https://astro.build/">Astro</a></dd>
+        <dd><a href="https://vuejs.org/">Vue</a></dd>
+      </div>
+      <div class="card">
+        <dt>Hosting:</dt>
+        <dd><a href="https://netlify.com/">Netlify</a></dd>
+      </div>
+      <div class="card">
+        <dt>Created By:</dt>
+        <dd><a href="https://ryantrimble.com/">Ryan Trimble</a></dd>
+        <dd><a href="https://github.com/mrtrimble/a-eye">GitHub Repo</a></dd>
+      </div>
+    </dl>
+  </section>
 </Layout>
 
+<style>
+  .card {
+    border: 0.5px solid currentColor;
+    padding: 1rem;
+  }
+
+  .card-list {
+    list-style: '';
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    h3 {
+      font-size: 1.75rem;
+    }
+  }
+
+  .card-grid {
+    --min: 40ch;
+    --gap: 1rem;
+
+    display: grid;
+    grid-gap: var(--gap);
+    /* min() with 100% prevents overflow
+  in extra narrow spaces */
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
+
+    dt,
+    dd {
+      margin: 0;
+    }
+
+    dt {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    dd {
+      font-size: 1.2rem;
+    }
+  }
+</style>
