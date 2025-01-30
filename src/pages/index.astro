@@ -1,42 +1,14 @@
 ---
-import EyeForm from '../components/EyeForm.vue';
+import EyeForm from '../components/WebCamera.vue';
+import Layout from '../layouts/Layout.astro';
 ---
 
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stratus A-EYE</title>
-  </head>
-  <body>
-    <header>
-      <hgroup>
-        <h1>Stratus A-EYE</h1>
-        <p>Figuring stuff out, so you don't have to!</p>
-      </hgroup>
-    </header>
-    <main>
-      <EyeForm client:only />
-    </main>
-  </body>
-</html>
+<Layout>
+  <h2>Features</h2>
+  <ul>
+    <li>Part Identification</li>
+    <li>Document Scanner</li>
+    <li>Diagram Generation</li>
+  </ul>
+</Layout>
 
-<style>
-  @import '@acab/reset.css' layer(reset);
-	body {
-		padding-block: 1.5rem;
-	}
-  main,
-  header {
-    width: min(100% - 3rem, var(--container-max, 60ch));
-    margin-inline: auto;
-
-    hgroup {
-      > * {
-        margin: 0;
-        paddign: 0;
-      }
-    }
-  }
-</style>

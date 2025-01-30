@@ -21,40 +21,20 @@
     </div>
 
     <div class="controls">
-      <button ref="playButtonRef"
-              title="Play"
-              @click="handlePlay">
-        Open Camera
-      </button>
-      <button ref="pauseButtonRef"
-              title="Pause"
-              @click="handlePause">Pause</button>
       <button ref="screenshotButtonRef"
               title="ScreenShot"
               @click="handleImageCapture">Take Photo</button>
     </div>
-
-    <dl v-if="response">
-      <dt>Name:</dt>
-      <dd v-text="response.name"></dd>
-      <dt>Description:</dt>
-      <dd v-text="response.description"></dd>
-      <dt>Dimensions</dt>
-      <dd>Height: {{ response.dimensions.height }}</dd>
-      <dd>Width: {{ response.dimensions.width }}</dd>
-      <dd>Depth: {{ response.dimensions.depth }}</dd>
-    </dl>
   </section>
 </template>
 
 <script setup lang="ts">
-import { actions } from 'astro:actions';
 import { ref, onMounted } from 'vue';
-import { dataToBlob } from '../utilities/dataToBlob'
-import { fileToGenerativePart } from '../utilities/fileToGenerativePart';
+import { dataToBlob } from '../scripts/dataToBlob'
+import { fileToGenerativePart } from '../scripts/fileToGenerativePart';
 
-const playButtonRef = ref<HTMLButtonElement>();
-const pauseButtonRef = ref<HTMLButtonElement>();
+const emitter = defineEmits(['camera:capture']);
+
 const screenshotButtonRef = ref<HTMLButtonElement>();
 const canvasRef = ref<HTMLCanvasElement>();
 const imageRef = ref<HTMLImageElement>();
@@ -62,14 +42,6 @@ const videoRef = ref<HTMLVideoElement>();
 const devices = ref<MediaDeviceInfo[]>([]);
 const streamStarted = ref(false);
 const selectedCamera = ref(null);
-
-interface Response {
-  description?: string;
-  name?: string;
-  [key: string]: any;
-}
-
-const response = ref<Response | null>(null);
 
 const constraints = ref({
   video: {
@@ -89,6 +61,7 @@ const constraints = ref({
 
 onMounted(() => {
   getCameraSelection();
+  handlePlay();
 })
 
 const getCameraSelection = async () => {
@@ -108,7 +81,6 @@ const startStream = async (constraints: MediaStreamConstraints) => {
   handleStream(stream);
 }
 
-
 const handlePlay = () => {
   if (streamStarted.value) {
     videoRef.value?.play();
@@ -126,12 +98,7 @@ const handlePlay = () => {
   }
 }
 
-const handlePause = () => {
-  videoRef.value?.pause();
-}
-
-const handleImageCapture = () => {
-  handlePause();
+const handleImageCapture = async () => {
 
   if (canvasRef.value) {
     if (videoRef.value) {
@@ -145,45 +112,23 @@ const handleImageCapture = () => {
         if (imageRef.value) {
           imageRef.value.src = canvasRef.value.toDataURL('image/webp');
 
-          submitImage();
+          const photo = imageRef.value.src
+
+          const imageFile = new File([dataToBlob(photo)], "image.webp", {
+            type: "image/webp"
+          });
+
+          const image = await fileToGenerativePart(imageFile);
+
+          emitter('camera:capture', image);
         }
       }
-    }
-  }
-}
-
-const submitImage = async () => {
-  if (imageRef.value) {
-    const photo = imageRef.value.src
-
-    const imageFile = new File([dataToBlob(photo)], "image.webp", {
-      type: "image/webp"
-    });
-
-    const image = await fileToGenerativePart(imageFile);
-
-    try {
-      const { data, error } = await actions.gemini.getResponse(image)
-      if (data) {
-        const parsedData = JSON.parse(data);
-        response.value = parsedData;
-
-        if (parsedData?.description) {
-          imageRef.value.alt = parsedData.description;
-        }
-      }
-
-      if (error) {
-        throw new Error(error.message || error.toString());
-      }
-    } catch (error) {
-      console.error(error);
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 #camera-section {
   margin-block-start: 1.5rem;
 
