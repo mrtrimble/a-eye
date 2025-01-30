@@ -8,7 +8,7 @@
   <body>
     <header>
       <hgroup>
-        <p>Stratus | 2025 Hackathon</p>
+        <p><a href="https://www.stratus.build">Stratus</a> | 2025 Hackathon</p>
         <h1><a href="/">Project A-EYE</a></h1>
         <p>Figuring stuff out, so you don't have to!</p>
       </hgroup>
@@ -28,12 +28,19 @@
 
 <style>
   @import '@acab/reset.css' layer(reset);
+
+  @layer rest {
+    html,
+    body {
+      height: 100%;
+    }
+  }
   body {
     padding-block: 1.5rem;
   }
   main,
   header {
-    width: min(100% - 3rem, var(--container-max, 80ch));
+    width: min(100% - 3rem, var(--container-max, 100ch));
     margin-inline: auto;
 
     > * + * {
@@ -46,17 +53,26 @@
         paddign: 0;
       }
     }
-
-    nav ul {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 1rem;
-    }
   }
 
   header {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    @media (min-width: 640px) {
+      grid-template-columns: 1fr 1fr;
+      nav ul {
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  main {
+    padding-block: 1.5rem;
   }
 </style>
