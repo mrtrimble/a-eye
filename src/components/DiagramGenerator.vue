@@ -11,6 +11,9 @@
       <pre>{{ response.image }}</pre>
     </dd>
   </dl>
+
+  <ErrorCmp v-if="error"
+            :error="error" />
 </template>
 
 <script setup lang="ts">
@@ -18,7 +21,9 @@ import { actions } from 'astro:actions';
 import { ref } from 'vue'
 import WebCamera from './WebCamera.vue';
 import Loader from './Loader.vue';
+import ErrorCmp from './Error.vue';
 
+const error = ref('');
 const isLoading = ref(false);
 
 interface Response {
@@ -41,7 +46,8 @@ const submitImage = async (payload: any) => {
       if (error) {
         throw new Error(error.message || error.toString());
       }
-    } catch (error) {
+    } catch (err) {
+      error.value = String(err);
       console.error(error);
     } finally {
       isLoading.value = false;

@@ -8,7 +8,7 @@ import vue from '@astrojs/vue';
 // https://astro.build/config
 export default defineConfig({
   adapter: netlify(),
-  integrations: [vue({ appEntrypoint: '/src/pages/_app' })],
+  integrations: [vue()],
   vite: {
     plugins: [basicSsl()],
     server: {

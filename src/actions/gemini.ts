@@ -5,11 +5,12 @@ import { scanDocumentSchema } from '../scripts/scanDocumentSchema';
 import { generateDiagramSchema } from '../scripts/generateDiagramSchema';
 
 const key = import.meta.env.GEMINI_API_KEY;
+const useModel = `gemini-1.5-flash`;
 const genAI = new GoogleGenerativeAI(key);
 
 const identificationHandler = async (image: string) => {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-exp-1114',
+    model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: identificationSchema
@@ -31,7 +32,7 @@ const identificationHandler = async (image: string) => {
 
 const scanDocumentHandler = async (image: string) => {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-exp-1114',
+    model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: scanDocumentSchema
@@ -53,7 +54,7 @@ const scanDocumentHandler = async (image: string) => {
 
 const generateDiagramHandler = async (image: string) => {
   const model = genAI.getGenerativeModel({
-    model: 'gemini-exp-1114',
+    model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
       responseSchema: generateDiagramSchema

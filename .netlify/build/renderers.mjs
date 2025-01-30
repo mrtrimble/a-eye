@@ -1,21 +1,7 @@
-import { plugin, defaultConfig } from '@formkit/vue';
 import { defineComponent, h, createSSRApp } from 'vue';
 import { renderToString } from 'vue/server-renderer';
 
-const _app = (app) => {
-  app.use(plugin, defaultConfig);
-};
-
-const mod = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
-  __proto__: null,
-  default: _app
-}, Symbol.toStringTag, { value: 'Module' }));
-
-const setup = async (app) => {
-	if ('default' in mod) {
-		await _app(app);
-	}
-};
+const setup = () => {};
 
 const contexts = new WeakMap();
 
@@ -89,7 +75,7 @@ async function renderToStaticMarkup(Component, inputProps, slotted, metadata) {
 	}
 	const app = createSSRApp({ render: () => h(Component, props, slots) });
 	app.config.idPrefix = prefix;
-	await setup(app);
+	await setup();
 	const html = await renderToString(app);
 	return { html, attrs };
 }
