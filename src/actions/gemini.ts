@@ -5,7 +5,7 @@ import { scanDocumentSchema } from '../scripts/scanDocumentSchema';
 import { generateDiagramSchema } from '../scripts/generateDiagramSchema';
 
 const key = import.meta.env.GEMINI_API_KEY;
-const useModel = `gemini-1.5-flash`;
+const useModel = import.meta.env.GEMINI_MODEL;
 const genAI = new GoogleGenerativeAI(key);
 
 const identificationHandler = async (image: string) => {

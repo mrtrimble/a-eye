@@ -1,6 +1,6 @@
 import { g as getActionQueryString } from './index_CmTKkXyS.mjs';
 import './astro/server_fWYTE4LQ.mjs';
-import { d as defineAction, o as objectType, s as stringType } from './server_D9yGAgs9.mjs';
+import { d as defineAction, o as objectType, s as stringType } from './server_CeKnizwt.mjs';
 import { SchemaType, GoogleGenerativeAI } from '@google/generative-ai';
 
 const ENCODED_DOT = "%2E";
@@ -44,7 +44,7 @@ function toActionProxy(actionCallback = {}, aggregatedPath = "") {
 }
 async function handleAction(param, path, context) {
   {
-    const { getAction } = await import('./server_D9yGAgs9.mjs').then(n => n.b);
+    const { getAction } = await import('./server_CeKnizwt.mjs').then(n => n.b);
     const action = await getAction(path);
     if (!action) throw new Error(`Action not found: ${path}`);
     return action.bind(context)(param);
@@ -126,7 +126,7 @@ const generateDiagramSchema = {
 };
 
 const key = "AIzaSyDncK-cp4XjBX57X_5oWdzNxHIMru6PtLI";
-const useModel = `gemini-1.5-flash`;
+const useModel = "gemini-exp-1114";
 const genAI = new GoogleGenerativeAI(key);
 const identificationHandler = async (image) => {
   const model = genAI.getGenerativeModel({

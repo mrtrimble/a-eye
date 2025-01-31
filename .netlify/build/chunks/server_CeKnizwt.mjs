@@ -4413,7 +4413,7 @@ var z = /*#__PURE__*/Object.freeze({
 
 async function getAction(path) {
   const pathKeys = path.split(".").map((key) => decodeURIComponent(key));
-  let { server: actionLookup } = await import('./_astro_internal-actions_Ms9ThckQ.mjs');
+  let { server: actionLookup } = await import('./_astro_internal-actions_Do4TDlvy.mjs');
   if (actionLookup == null || !(typeof actionLookup === "object")) {
     throw new TypeError(
       `Expected \`server\` export in actions file to be an object. Received ${typeof actionLookup}.`
