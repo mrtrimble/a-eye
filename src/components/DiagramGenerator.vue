@@ -39,8 +39,10 @@ const submitImage = async (payload: any) => {
 
     try {
       const { data, error } = await actions.gemini.generateDiagram(payload)
+      
       if (data) {
         response.value = JSON.parse(data);
+        console.log({ response: response.value });
       }
 
       if (error) {

@@ -13,18 +13,23 @@ const identificationHandler = async (image: string) => {
     model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
-      responseSchema: identificationSchema
-    }
+      responseSchema: identificationSchema,
+    },
   });
 
   const promptInstructions = `
-      Describe part, estimate dimensions, and provide name, follow JSON schema:
-    `;
+    Examine the part in this photo. 
+    
+    Provide a name and description of the part. Also provide the dimensions: height, width, and depth in inches. 
+    
+    Follow the provided JSON schema.
+  `;
 
   const { response } = await model.generateContent([promptInstructions, image]);
 
   if (response) {
     const responseText = response.text();
+    console.log({ responseText });
 
     return responseText;
   }
@@ -35,12 +40,16 @@ const scanDocumentHandler = async (image: string) => {
     model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
-      responseSchema: scanDocumentSchema
-    }
+      responseSchema: scanDocumentSchema,
+    },
   });
 
   const promptInstructions = `
-    Scan document and transcribe text, providing document title, follow JSON schema:
+    Examine the document in this photo. 
+    
+    Provide a document title and a text transcription of the document.
+    
+    Follow the provided JSON schema.
   `;
 
   const { response } = await model.generateContent([promptInstructions, image]);
@@ -57,12 +66,16 @@ const generateDiagramHandler = async (image: string) => {
     model: useModel,
     generationConfig: {
       responseMimeType: 'application/json',
-      responseSchema: generateDiagramSchema
-    }
+      responseSchema: generateDiagramSchema,
+    },
   });
 
   const promptInstructions = `
-    Generate a 2D line diagram of the object in this photo, follow JSON schema:
+    Examine the part in this photo. 
+    
+    Generate an ASCII-art style diagram of the part in the photo. 
+    
+    Follow the provided JSON schema.
   `;
 
   const { response } = await model.generateContent([promptInstructions, image]);
@@ -76,12 +89,12 @@ const generateDiagramHandler = async (image: string) => {
 
 export const gemini = {
   identifyObject: defineAction({
-    handler: async (image) => identificationHandler(image)
+    handler: async (image) => identificationHandler(image),
   }),
   scanDocument: defineAction({
-    handler: async (image) => scanDocumentHandler(image)
+    handler: async (image) => scanDocumentHandler(image),
   }),
   generateDiagram: defineAction({
-    handler: async (image) => generateDiagramHandler(image)
-  })
+    handler: async (image) => generateDiagramHandler(image),
+  }),
 };

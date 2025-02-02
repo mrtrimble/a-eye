@@ -1,19 +1,19 @@
 import { SchemaType } from '@google/generative-ai';
 
 export const generateDiagramSchema = {
-  description: 'Generate Diagram Details',
+  description: 'Generate ASCII Diagram',
   type: SchemaType.OBJECT,
   properties: {
     title: {
       type: SchemaType.STRING,
       description: 'Title of generated diagram',
-      nullable: false
+      nullable: false,
     },
     image: {
       type: SchemaType.STRING,
-      description: 'Generate an ASCII diagram of the object',
-      nullable: false
-    }
+      description: 'Provide an ASCII art style diagram of the part in the included photo',
+      nullable: false,
+    },
   },
-  required: ['title', 'image']
+  required: ['title', 'image'],
 };

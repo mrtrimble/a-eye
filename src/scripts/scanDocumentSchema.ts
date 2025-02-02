@@ -1,17 +1,17 @@
 import { SchemaType } from '@google/generative-ai';
 
 export const scanDocumentSchema = {
-  description: 'Document Transcription Details',
+  description: 'Scanned Document Transcription',
   type: SchemaType.OBJECT,
   properties: {
     title: {
       type: SchemaType.STRING,
-      description: 'Set the title of the document',
+      description: 'Provide a title of the scanned document',
       nullable: false
     },
     transcription: {
       type: SchemaType.STRING,
-      description: 'Scan document and transcribe text to markdown',
+      description: 'Provide a text transcription of the scanned document, format in markdown.',
       nullable: false
     }
   },
